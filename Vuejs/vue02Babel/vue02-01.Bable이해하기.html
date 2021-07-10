@@ -41,5 +41,30 @@
 
 <!-- ES5 사용하기 -->
 
+<script type="text/javascript">
+    var name= "abc";
+    var age = 10;
 
+    var getMessage = function name(params) {
+        var output_es5 = document.getElementById("output_es5");
+        output_es5.innerText = "Hello, ES5";
+    }
+    getMessage();
+</script>
 <!-- ES6 사용하기 -->
+
+<!-- vue 플러그인 임포트   -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js">
+    /* 자바스크립트로 컴파일러. ES6-->ES5, JSX-->ES5 */
+</script>
+<script type="text/babel">
+    const name = "abc";
+    let age = 10;
+
+    const getMessage = ()=>{
+        var output_es6 = document.getElementById("output_es6");
+        output_es6.innerText = "Hello, ES6";
+    }
+    getMessage();
+</script>
