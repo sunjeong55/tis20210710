@@ -62,3 +62,28 @@
 </body>
 
 </html>
+
+<script>
+    var objarray = [
+        { text: 'One', value: 'A' },
+        { text: 'Two', value: 'B' },
+        { text: 'Three', value: 'C' }
+    ];
+
+    objarray[objarray.length] = { text: 'Four', value: 'D' };
+
+    objarray[1]['text'] = '2';
+    objarray[1]['value'] = '2';
+
+    console.log(objarray);
+
+    //objarray 에서 filter 메서드를 사용하여 text의 값이 'One' 인 객체들
+    const arrfilter = objarray.filter((value, index, array)=>{
+        return value['text'] === 'One';
+    });
+    console.log(arrfilter);
+
+    objarray.splice(2,1);
+    console.log(objarray);
+
+</script>
