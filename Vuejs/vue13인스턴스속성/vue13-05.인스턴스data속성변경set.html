@@ -23,7 +23,7 @@
 <body>
     <xmp>
 
-        data 속성의 값을 변경하려면 재할당으로 처리해야 한다.
+        data 속성의 값을 변경하려면 복제 후 재할당으로 처리해야 한다.
 
         data 속성 주의 사항
             인스턴스나 컴포넌트의 data 속성의 값을 직접 바꾸면 화면에 rendering 이 되지 않는 문제 발생
@@ -109,3 +109,66 @@
 </body>
 
 </html>
+
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script>
+    new Vue({
+        /* edtmc^2w */
+        el: "#app",
+        data: {
+            /* 인스턴스 안에서 사용되는 변수 등록, 공유 변수 */
+            arr:[1, 2, 3, 4, 5]
+        },
+        //template: ``,
+        methods: {
+            /* 이벤트 핸들러 등록 */
+            change1:function(event){
+                this.$data.arr[0] = 100;
+                console.log(this.$data.arr); //로그는 [100, 2, 3, 4, 5] 화면은 [1, 2, 3, 4, 5] -> 화면도 바꾸려면 ..???
+
+                this.$set( this.$data.arr, 0, 100 );
+            },
+            change2:function(event){
+                this.$set( this.$data.arr, 1, 300 );
+                Vue.set( this.$data.arr, 1, 300 );
+            },
+            change3:function(event){
+                this.$data.arr.splice( 0, 2 );  //splice에는 복제 후 재할당 기능이 내장되어있음.
+                console.log(this.$data.arr);
+            },
+            change4:function(event){
+                //복제 후 재 할당의 또다른 방식
+                //1. spread 연산자 사용
+
+                //2. map 메소드 사용
+
+                const arrCopy = [500, ...this.$data.arr, 70 ]; //...this.$data.arr = 3,4,5 / 복제 단계
+                this.$data.arr = arrCopy;   //재할당 단계
+                this.$set( this.$data, "arr" ,arrCopy );
+
+            },
+
+        },
+        components: {
+            /* 지역 컴포넌트 등록. 예시) "태그명" : 컴포넌트명 */
+
+        },
+        computed: {
+            /* 자동처리 + 동기식. 메서드로 작성. return 필수. */
+
+        },
+        watch: {
+            /* 자동처리 + 비동기식. data 에 등록된 프로퍼티 모니터링. 메서드로 작성. 매개변수 입력 필수  */
+
+        },
+        mounted: function() {
+            console.log("mounted");
+        },
+        updated: function() {
+            console.log("updated");
+        },
+    });
+
+</script>
