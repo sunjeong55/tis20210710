@@ -248,7 +248,7 @@
                 <i class="addBtn fas fa-plus" aria-hidden="true"></i>
             </span>
 
-            <div class="modal-mask"
+              <!--<div class="modal-mask"
                 v-on:keyup.esc="$emit('close')"
                 v-if="showModal"
                 v-on:close="showModal = false">
@@ -258,7 +258,7 @@
                             <h3 slot="header">경고</h3>
                         </div>
 
-                        <div class="modal-footer">
+                       <div class="modal-footer">
                             <span v-on:click="showModal = false">
                                 할 일을 입력하세요.
                                 <i class="closeModalBtn fas fa-times" aria-hidden="true"></i>
@@ -266,7 +266,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
 
         <!-- TodoList -->
@@ -281,7 +281,7 @@
                     {{ todoItem.todo }}
                     <span class="removeBtn"
                           type="button"
-                          v-on:click="removeTodo(todoItem.id, index)">
+                          v-on:click.stop="removeTodo(todoItem.id, index)">
                         <i class="far fa-trash-alt" aria-hidden="true"></i>
                     </span>
                 </li>
@@ -294,9 +294,115 @@
         </div>
 
     </div>
-    
-    
+
+
 
 </body>
 
 </html>
+
+<!-- vue 플러그인 임포트   -->
+<script src="https://unpkg.com/vue@2.5.16/dist/vue.js">/* vue 플러그인 임포트 */</script>
+<script src="https://unpkg.com/vuex@3.3.0/dist/vuex.js"> /* vuex 플러그인 임포트 */</script>
+<script src="https://unpkg.com/vue-router@3.1.6/dist/vue-router.js"> /* vue 라우터 플러그인 임포트 */</script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"> /* axios 플러그인 임포트 */</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> /* jQuery 플러그인 임포트 */</script>
+<script>
+    new Vue({
+        /* edtmc^2w */
+        el: "#app",
+        data: {
+            /* 인스턴스 안에서 사용되는 변수 등록, 공유 변수 */
+            newTodoItem : null,
+            showModal : false,
+            todoItems : [
+                { id: 1, todo: "영화보기", done: false },
+                { id: 2, todo: "주말 산책", done: true },
+                { id: 3, todo: "ES6 학습", done: false },
+                { id: 4, todo: "잠실 야구장", done: false }
+            ]
+        },
+        //template: ``,
+        methods: {
+            /* 이벤트 핸들러 등록 */
+            addTodo(){
+                let maxObj = null;
+                if(this.$data.todoItems.length>0){
+                   maxObj = this.$data.todoItems.reduce((prevObj, curtObj, index, array) =>{
+                        if(prevObj.id >=curtObj.id){
+                            return prevObj;
+                        }else{
+                            return curtObj;
+                        }
+                    })
+                }else{
+                    maxObj = {
+                        id : 0,
+                    }
+                }
+
+
+                const newTodo ={
+                    id : "",
+                    todo : this.$data.newTodoItem,
+                    done : false
+                };
+
+                //this.$data.todoItems.push( newTodo );
+                this.$data.todoItems[this.$data.todoItems.length] = newTodo;
+                this.$data.newTodoItem = "";
+
+            },
+            checked(done){
+                if(done){
+                    return "checked";
+                }else{
+                    return false;
+                }
+            },
+            doneToggle(id, index){
+                this.$data.todoItems[index].done = !this.$data.todoItems[index].done;
+                //this.$set( this.$data.todoItems[index] , "done" , !this.$data.todoItems[index].done );
+                /*const indexFind = this.$data.todoItems.findIndex((item,index,array)=>{
+                    return item.id === id;
+                });
+
+                const newobj = {
+                    ...this.$data.todoItems[indexFind],
+                    done : !this.$data.todoItems[indexFind].done
+                };
+
+                this.$set( this.$data.todoItems, indexFind, newobj );
+                */
+            },
+            removeTodo(id, index){
+                //복제 후 재할당
+                this.$data.todoItems.splice(index ,1);
+
+            },
+            clearAll(){
+                this.$data.todoItmes = [];
+            },
+
+        },
+        components: {
+            /* 지역 컴포넌트 등록. 예시) "태그명" : 컴포넌트명 */
+
+        },
+        computed: {
+            /* 자동처리 + 동기식. 메서드로 작성. return 필수. */
+
+        },
+        watch: {
+            /* 자동처리 + 비동기식. data 에 등록된 프로퍼티 모니터링. 메서드로 작성. 매개변수 입력 필수  */
+
+        },
+        mounted: function() {
+            console.log("mounted");
+        },
+        updated: function() {
+            console.log(this.$data.todoItems);
+        },
+    });
+
+</script>
