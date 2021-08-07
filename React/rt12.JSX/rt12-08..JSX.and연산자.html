@@ -28,18 +28,31 @@
             </h2>
         </div>
 
+        class MailboxCont(props) extends React.Component{
+            state = {
+                message : ['React', 'Re: React', 'Re:Re: React']
+            }
+            render(){
+                return (
+                    <Mailbox unreadMessaged={message}></Mailbox>
+                );
+            }
 
-        function Mailbox(props) {
-            const unreadMessages = props.unreadMessages;
-            return (
-                <div>
-                    <h1>Hello!</h1>
-                    {/*unreadMessages.length > 0 인 경우에만 나오게 하시오*/}
-                    <h2>
-                        You have {unreadMessages.length} unread messages.
-                    </h2>
-                </div>
-            );
+          }
+
+        class Mailbox(props) extends React.Component {
+            render(){
+                return (
+                    <div>
+                        <h1>Hello!</h1>
+                        {/*unreadMessages.length > 0 인 경우에만 나오게 하시오*/}
+                        <h2>
+                            You have {unreadMessages.length} unread messages.
+                        </h2>
+                    </div>
+                );
+            }
+
           }
 
         const messages = ['React', 'Re: React', 'Re:Re: React'];
@@ -54,3 +67,60 @@
 </body>
 
 </html>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js">
+    /* 자바스크립트로 컴파일러. ES6-->ES5, JSX-->ES5 */
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.development.js">
+    /* import React, { Component, PureComponent } from "react" */
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.11.0/umd/react-dom.development.js">
+    /* import ReactDOM from "react-dom" */
+</script>
+
+<script type="text/babel">
+//import React, {Component, PureComponent, Fragment} from "react";
+//import Redux from "redux";
+//import ReactRedux, {Provider} from "react-redux";
+//import {BrowserRouter,Switch,Router,Route,IndexRoute,Link,IndexLink,NavLink} from "react-router-dom";
+//import ReactDOM from "react-dom";
+
+console.log(React);
+
+class MailBox extends React.Component {
+
+    render() { // JSX로 화면 만들기
+        //const unreadMessages = this.props.unreadMessages;
+        //const {unreadMessages} = this.props;
+        return (
+            <div>
+                 <h1>Hello!</h1>
+                {/* unreadMessages.length > 0 인 경우에만 나오게 하시오*/}
+                { (this.props.unreadMessages && this.props.unreadMessages.length > 0 )&&
+                    <h2>
+                        You have unread messages.
+                    </h2>
+                }{( this.props.unreadMessages ===null || this.props.unreadMessages.length === 0 )&&
+                    <h2>
+                        You have not messages.
+                    </h2>
+                }
+            </div>
+        )
+    }
+};
+
+class MailBoxContainer extends React.Component {
+    state = {
+        message : []
+    }
+    render() { // JSX로 화면 만들기
+        return (
+            <MailBox unreadMessages={this.state.message} />
+        )
+    }
+};
+
+ReactDOM.render(<MailBoxContainer></MailBoxContainer> , document.getElementById("app"))
+</script>

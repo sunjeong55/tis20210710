@@ -29,3 +29,47 @@
 </body>
 
 </html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js">
+    /* 자바스크립트로 컴파일러. ES6-->ES5, JSX-->ES5 */
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.development.js">
+    /* import React, { Component, PureComponent } from "react" */
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.11.0/umd/react-dom.development.js">
+    /* import ReactDOM from "react-dom" */
+</script>
+
+<script type="text/babel">
+
+class TodoList extends React.Component {
+
+    state = {
+        // 상태값(변수)을 정의한다.
+         todoList : [
+            { taskName: "빨래하기", finished: false },
+            { taskName: "공부하기", finished: true },
+            { taskName: "게임하기", finished: true },
+        ]
+    }
+    render() { // JSX로 화면 만들기
+        let rtn=null;
+        if(this.state.todoList && this.state.todoList.length>0 ){
+            rtn = this.state.todoList.map((todo, index)=>{
+                if(todo.finished){
+                    return <li key={index}>{todo.taskName}</li>
+                }
+
+            })
+        }
+
+        return (
+            <div>
+                {rtn}
+            </div>
+        )
+    }
+};
+
+ReactDOM.render(<TodoList></TodoList>, document.getElementById("app"));
+</script>

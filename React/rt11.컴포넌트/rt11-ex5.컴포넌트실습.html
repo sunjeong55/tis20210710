@@ -81,30 +81,111 @@
 
     <div id="app">
         <!-- ComponentHeader -->
-        <header>
-            Header
-        </header>
+
 
         <!-- ComponentContent -->
-        <div id="content">
-            <p>Content</p>
 
-            <!-- ComponentAside -->
-            <aside>
-                Aside
-            </aside>
-
-            <!-- ComponentContentList -->
-            <div id="content-list">
-                List
-            </div>
-        </div>
 
         <!-- ComponentFooter -->
-        <footer>
-            Footer
-        </footer>
+
     </div>
 </body>
 
 </html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js">
+    /* 자바스크립트로 컴파일러. ES6-->ES5, JSX-->ES5 */
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.development.js">
+    /* import React, { Component, PureComponent } from "react" */
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.11.0/umd/react-dom.development.js">
+    /* import ReactDOM from "react-dom" */
+</script>
+
+<script type="text/babel">
+ //import React, {Component, PureComponent, Fragment} from "react";
+ //import Redux from "redux";
+ //import ReactRedux, {Provider} from "react-redux";
+ //import {BrowserRouter,Switch,Router,Route,IndexRoute,Link,IndexLink,NavLink} from "react-router-dom";
+ //import ReactDOM from "react-dom";
+
+ console.log(React);
+
+ class ComponentHeader extends React.Component {
+
+     render() { // JSX로 화면 만들기
+         return (
+             <div>
+                <header>
+                    Header
+                </header>
+             </div>
+         )
+     }
+ };
+
+ class ComponentAside extends React.Component {
+
+render() { // JSX로 화면 만들기
+    return (
+        <div>
+            <aside>
+                Aside
+            </aside>
+        </div>
+    )
+}
+};
+
+class ComponentList extends React.Component {
+
+render() { // JSX로 화면 만들기
+    return (
+        <div>
+            <div id="content-list">
+                List
+            </div>
+        </div>
+    )
+}
+};
+
+
+ class ComponentContent extends React.Component {
+
+render() { // JSX로 화면 만들기
+    return (
+        <div>
+            <div id="content">
+            <p>Content</p>
+            <ComponentAside></ComponentAside>
+            <ComponentList></ComponentList>
+        </div>
+        </div>
+    )
+}
+};
+class ComponentFooter extends React.Component {
+
+render() { // JSX로 화면 만들기
+    return (
+        <div>
+            <footer>
+                Footer
+            </footer>
+        </div>
+    )
+}
+};
+
+ReactDOM.render(
+    <div>
+    <ComponentHeader></ComponentHeader>
+    <ComponentContent></ComponentContent>
+    <ComponentFooter></ComponentFooter>
+    </div>
+    , document.getElementById("app")
+);
+
+</script>
