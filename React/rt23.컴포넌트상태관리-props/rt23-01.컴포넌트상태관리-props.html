@@ -16,11 +16,8 @@
     <xmp>
         React의 컴포넌트 사이에서 데이터를 주고 받는 방법에 대해서 배운다.
 
-
         부모가 자식에게 데이터를 전달하는 것은 자식컴포넌트에서 부모컴포넌트의 데이터를 이용한(읽기) 로직을 처리하기 위함이고,
         자식 컴포넌트에서 부모컴포넌트로 데이터를 전달하는 것은 부모 state의 값을 변경하기 위함입니다.
-
-
 
         case1 : state 내림
         부모 -> 자식 데이터 전달
@@ -44,8 +41,6 @@
                 )
             }
         }
-
-
 
         case2 : state up
         자식 -> 부모 데이터 전달
@@ -85,4 +80,84 @@
     </div>
 </body>
 
-</html>
+</html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js">
+    /* 자바스크립트로 컴파일러. ES6-->ES5, JSX-->ES5 */
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.development.js">
+    /* import React, { Component, PureComponent } from "react" */
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.11.0/umd/react-dom.development.js">
+    /* import ReactDOM from "react-dom" */
+</script>
+
+<script type="text/babel">
+//import React, {Component, PureComponent, Fragment} from "react";
+//import Redux from "redux";
+//import ReactRedux, {Provider} from "react-redux";
+//import {BrowserRouter,Switch,Router,Route,IndexRoute,Link,IndexLink,NavLink} from "react-router-dom";
+//import ReactDOM from "react-dom";
+
+console.log(React);
+
+class Parent extends React.Component {
+
+    state = {
+        // 상태값(변수)을 정의한다.
+
+    }
+
+    func = {
+        // func에 정의된 메서드는 반드시 constructor에서 this를 bind() 처리해야 한다.
+        // func에는 자식 컴포넌트에 넘길 메서드만 작성한다.
+        // 왜 자식에게 부모 메서드를 넘기나? 부모의 상태값을 변경하기 위해서.
+    }
+ 
+    handler = (event)=>{
+        // 이벤트 핸들러는 화살표 함수로 만들면 this bind()를 생략해도 된다
+        console.log(event.target)
+    }
+    parentFunction = (text) => {
+        console.log(text);
+    }
+    render() { // JSX로 화면 만들기
+        const parentText = 'parentText';
+        return (
+            <div>
+                <Child childMessage={this.parentFunction}></Child>
+            </div>
+        )
+    }
+};
+
+class Child extends React.Component {
+
+    state = {
+        // 상태값(변수)을 정의한다.
+    }
+
+    func = {
+        // func에 정의된 메서드는 반드시 constructor에서 this를 bind() 처리해야 한다.
+        // func에는 자식 컴포넌트에 넘길 메서드만 작성한다.
+        // 왜 자식에게 부모 메서드를 넘기나? 부모의 상태값을 변경하기 위해서.
+    }
+
+    handler = (event)=>{
+        // 이벤트 핸들러는 화살표 함수로 만들면 this bind()를 생략해도 된다
+        console.log(event.target)
+    }
+    childFunction = () => {
+        this.props.parentFunction(this.childText);
+    }
+    render() { // JSX로 화면 만들기
+        return (
+            <div>
+                {this.props.childMessage}
+            </div>
+        )
+    }
+};
+
+ReactDOM.render(<Parent></Parent>, document.getElementById("app"));
+</script>

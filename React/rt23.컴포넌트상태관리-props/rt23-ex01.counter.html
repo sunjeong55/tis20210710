@@ -83,3 +83,125 @@
 </body>
 
 </html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js">
+    /* 자바스크립트로 컴파일러. ES6-->ES5, JSX-->ES5 */
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.development.js">
+    /* import React, { Component, PureComponent } from "react" */
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.11.0/umd/react-dom.development.js">
+    /* import ReactDOM from "react-dom" */
+</script>
+
+<script type="text/babel">
+//import React, {Component, PureComponent, Fragment} from "react";
+//import Redux from "redux";
+//import ReactRedux, {Provider} from "react-redux";
+//import {BrowserRouter,Switch,Router,Route,IndexRoute,Link,IndexLink,NavLink} from "react-router-dom";
+//import ReactDOM from "react-dom";
+
+console.log(React);
+
+class Parent extends React.Component {
+
+    state = {
+        // 상태값(변수)을 정의한다.
+        counter : 0
+    }
+
+    func = {
+        // func에 정의된 메서드는 반드시 constructor에서 this를 bind() 처리해야 한다.
+        // func에는 자식 컴포넌트에 넘길 메서드만 작성한다.
+        // 왜 자식에게 부모 메서드를 넘기나? 부모의 상태값을 변경하기 위해서.
+
+        addCounter(param){
+            this.setState({
+                ...this.state,
+                counter : this.state.counter + param
+            })
+        },
+        subCounter(param){
+            this.setState({
+                ...this.state,
+                counter : this.state.counter - param
+            })
+        }
+    }
+
+    constructor(props){
+        super()
+        this.func.addCounter = this.func.addCounter.bind(this);
+        this.func.subCounter = this.func.subCounter.bind(this);
+    }
+    addCounter = (event)=>{
+        // 이벤트 핸들러는 화살표 함수로 만들면 this bind()를 생략해도 된다
+        console.log(event.target);
+
+        //로직 처리 함수 호출
+        this.func.addCounter(10);
+    }
+    subCounter = (event)=>{
+        // 이벤트 핸들러는 화살표 함수로 만들면 this bind()를 생략해도 된다
+        console.log(event.target);
+        this.func.subCounter(10);
+    }
+
+    render() { // JSX로 화면 만들기
+        const parentText = 'parentText';
+        return (
+            <div id="app" class="component-parent">
+                Parent counter : {this.state.counter} <br />
+                <button name="parent" onClick={this.addCounter}>+</button>
+                <button name="parent" onClick={this.subCounter}>-</button>
+                <p></p>
+
+                <Child {...this.state} {...this.func} {...this.props}></Child>
+            </div>
+
+
+
+        )
+    }
+};
+
+class Child extends React.Component {
+
+    state = {
+        // 상태값(변수)을 정의한다.
+    }
+
+    func = {
+        // func에 정의된 메서드는 반드시 constructor에서 this를 bind() 처리해야 한다.
+        // func에는 자식 컴포넌트에 넘길 메서드만 작성한다.
+        // 왜 자식에게 부모 메서드를 넘기나? 부모의 상태값을 변경하기 위해서.
+    }
+
+    addCounter = (event)=>{
+        // 이벤트 핸들러는 화살표 함수로 만들면 this bind()를 생략해도 된다
+        console.log(event.target);
+
+        //부모메소드 콜백
+        this.props.addCounter(1);
+    }
+    subCounter = (event)=>{
+        // 이벤트 핸들러는 화살표 함수로 만들면 this bind()를 생략해도 된다
+        console.log(event.target);
+
+        //부모메소드 콜백
+        this.props.subCounter(1);
+    }
+
+
+    render() { // JSX로 화면 만들기
+        return (
+            <div class="component-child">
+                Child counter : {this.props.counter} <br />
+                <button name="child" onClick={this.addCounter}>+</button>
+                <button name="child" onClick={this.subCounter}>-</button>
+            </div>
+        )
+    }
+};
+
+ReactDOM.render(<Parent></Parent>, document.getElementById("app"));
+</script>

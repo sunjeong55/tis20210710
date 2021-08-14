@@ -34,3 +34,67 @@
 </body>
 
 </html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js">
+    /* 자바스크립트로 컴파일러. ES6-->ES5, JSX-->ES5 */
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.development.js">
+    /* import React, { Component, PureComponent } from "react" */
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.11.0/umd/react-dom.development.js">
+    /* import ReactDOM from "react-dom" */
+</script>
+
+<script type="text/babel">
+//import React, {Component, PureComponent, Fragment} from "react";
+//import Redux from "redux";
+//import ReactRedux, {Provider} from "react-redux";
+//import {BrowserRouter,Switch,Router,Route,IndexRoute,Link,IndexLink,NavLink} from "react-router-dom";
+//import ReactDOM from "react-dom";
+
+console.log(React);
+
+class TickTock extends React.Component {
+
+
+    state = {
+        // 상태값(변수)을 정의한다.
+        counter :0,
+        timer : null
+    }
+
+    componentDidMount() {
+        // 마운트 완료 후에 실행됨 : 페이지 load 될 때 한번
+        // componentDidMount가 사용되는 경우: redux 구독 설정, focus 줄때
+        this.state.timer = setInterval(
+            ()=>{
+                //this.state.counter = this.state.counter+1
+                this.setState({
+                    ...this.state,
+                    counter : this.state.counter + 1
+                })
+            },
+            1000 );
+    }
+    componentDidUpdate(prevProps, prevState) {
+        // 업데이트 완료 후에 실행됨 : 여러번, state 가 변경될 때마다
+        console.log("componentDidUpdate");
+        if( this.state.counter >= 10){
+            //해제
+            clearInterval(this.set.timer);
+        }
+    }
+    componentWillUnmount() {
+        // 언마운트 완료 후에 실행됨 : 페이지 unload 될 때 한번
+        // componentWillUnmount가 사용되는 경우: redux 구독 해제, 이벤트 핸들러 해제
+    }
+    render() { // JSX로 화면 만들기
+        return (
+            <div>
+                current counter: {this.state.counter}
+            </div>
+        )
+    }
+};
+ReactDOM.render(<TickTock></TickTock>, document.getElementById("app"));
+</script>

@@ -27,7 +27,7 @@
         컴포넌트 생성과 click 이벤트 핸들러 작성을 실습한다.
 
         1. Greeting 컴포넌트 만들기
-            
+
             return (
                 <div>
                     <div style={this.style.style1} onClick={this.handlerClick1}>
@@ -75,3 +75,67 @@
 </body>
 
 </html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js">
+    /* 자바스크립트로 컴파일러. ES6-->ES5, JSX-->ES5 */
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.12.0/umd/react.development.js">
+    /* import React, { Component, PureComponent } from "react" */
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.11.0/umd/react-dom.development.js">
+    /* import ReactDOM from "react-dom" */
+</script>
+
+<script type="text/babel">
+
+
+class Greeting extends React.Component {
+
+    style = {
+        style1 :{
+            width: "100px",
+            height: "100px",
+            verticalAlign: "center",
+            lineHeight: "100px",
+            background: "gray"
+        },
+        style2 :{
+            width: "100px",
+            height: "100px",
+            verticalAlign: "center",
+            lineHeight: "100px",
+            background: "yellow"
+        },
+    }
+
+    constructor(props){
+        super()
+        //this 바인딩
+        //func 에 정의한 메서드는 반드시 this bind 처리해야 한다.
+        this.handlerClick1 = this.handlerClick1.bind(this);
+    }
+
+    handlerClick1(event){
+        console.log("handlerClick1", this);
+    }
+
+    handlerClick2 = (event)=>{
+        console.log("handlerClick2", this);
+    }
+
+    render() { // JSX로 화면 만들기
+        return (
+            <div>
+                <div style={this.style.style1} onClick={this.handlerClick1}>
+                    div1
+                </div>
+                <div style={this.style.style2} onClick={this.handlerClick2}>
+                    div2
+                </div>
+            </div>
+        )
+    }
+};
+
+ReactDOM.render(<Greeting></Greeting>, document.getElementById("app"))
+</script>
